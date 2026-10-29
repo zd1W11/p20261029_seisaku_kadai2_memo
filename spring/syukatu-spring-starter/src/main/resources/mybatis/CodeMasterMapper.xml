@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.mapper.CodeMasterMapper">
+
+	<select id="selectAll" resultType="CodeMaster">
+		SELECT * FROM code_masters
+		WHERE system_id = #{systemId}
+		ORDER BY code_id, display_order, setting_code
+	</select>
+
+	<select id="selectByCodeId" resultType="CodeMaster">
+		SELECT * FROM code_masters
+		WHERE system_id = #{systemId} AND code_id = #{codeId}
+		ORDER BY display_order, setting_code
+	</select>
+
+	<insert id="insert" parameterType="CodeMaster">
+		INSERT INTO code_masters
+		(system_id, code_id, setting_code, text_1, text_2, text_3, num_1, num_2, num_3, display_order)
+		VALUES (#{systemId}, #{codeId}, #{settingCode}, #{text1}, #{text2}, #{text3},
+		#{num1}, #{num2}, #{num3}, #{displayOrder})
+	</insert>
+
+	<update id="update" parameterType="CodeMaster">
+		UPDATE code_masters
+		SET text_1 = #{text1}, text_2 = #{text2}, text_3 = #{text3},
+		num_1 = #{num1}, num_2 = #{num2}, num_3 = #{num3},
+		display_order = #{displayOrder}
+		WHERE system_id = #{systemId} AND code_id = #{codeId} AND setting_code = #{settingCode}
+	</update>
+
+	<delete id="delete" parameterType="CodeMaster">
+		DELETE FROM code_masters
+		WHERE system_id = #{systemId} AND code_id = #{codeId} AND setting_code = #{settingCode}
+	</delete>
+
+	<delete id="deleteBySystemId">
+		DELETE FROM code_masters WHERE system_id = #{systemId}
+	</delete>
+
+</mapper>

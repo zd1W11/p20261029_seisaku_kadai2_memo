@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.mapper.ItemSettingMapper">
+
+	<select id="selectAll" resultType="ItemSetting">
+		SELECT * FROM item_settings
+		WHERE system_id = #{systemId}
+		ORDER BY display_order, column_no
+	</select>
+
+	<insert id="insert" parameterType="ItemSetting">
+		INSERT INTO item_settings
+		(system_id, column_no, display_name, is_visible, is_required, data_type, display_width, is_url, display_order, code_id, default_value, search_type)
+		VALUES (#{systemId}, #{columnNo}, #{displayName}, #{isVisible}, #{isRequired}, #{dataType},
+		#{displayWidth}, #{isUrl}, #{displayOrder}, #{codeId}, #{defaultValue}, #{searchType})
+	</insert>
+
+	<delete id="deleteBySystemId">
+		DELETE FROM item_settings WHERE system_id = #{systemId}
+	</delete>
+
+	<update id="update" parameterType="ItemSetting">
+		UPDATE item_settings
+		SET display_name = #{displayName}, is_visible = #{isVisible},
+		is_required = #{isRequired}, data_type = #{dataType}, display_width = #{displayWidth},
+		is_url = #{isUrl}, display_order = #{displayOrder},
+		code_id = #{codeId},
+		default_value = #{defaultValue}, search_type = #{searchType}
+		WHERE system_id = #{systemId} AND column_no = #{columnNo}
+	</update>
+
+</mapper>
