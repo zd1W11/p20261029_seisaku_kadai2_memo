@@ -38,6 +38,47 @@ export function applyDateTokens(text, date = new Date()) {
  * 共通設定（item_settings の system_id=0）の初期値に指定された書式で表示する
  * 書式が未指定の場合は "%Y/%m/%d %H:%i:%s" を使う。解釈できない値はそのまま返す
  */
+/**
+ * 日付型項目の保存値から8桁の数字（yyyyMMdd）を取り出す。
+ * 保存値は数字のみだが、区切り文字付き（"2026-10-31" など）の値も数字だけを取り出して解釈する。
+ * 8桁の数字として解釈できない場合は null を返す。
+ */
+function dateDigitsOf(value) {
+  if (value == null || value === "") return null;
+  const digits = String(value).replace(/\D/g, "");
+  return digits.length === 8 ? digits : null;
+}
+
+/**
+ * 日付型項目の表示用文字列（"yyyy/mm/dd"）を返す。
+ * 8桁の数字として解釈できない値はそのまま返す。
+ */
+export function formatDateValue(value) {
+  if (value == null || value === "") return "";
+  const d = dateDigitsOf(value);
+  if (!d) return value;
+  return `${d.slice(0, 4)}/${d.slice(4, 6)}/${d.slice(6, 8)}`;
+}
+
+/**
+ * 日付型項目の保存値を、カレンダー入力（input type="date"）の値（"yyyy-mm-dd"）に変換する。
+ * 解釈できない場合は空文字を返す。
+ */
+export function toDateInputValue(value) {
+  const d = dateDigitsOf(value);
+  if (!d) return "";
+  return `${d.slice(0, 4)}-${d.slice(4, 6)}-${d.slice(6, 8)}`;
+}
+
+/**
+ * カレンダー入力（input type="date"）の値（"yyyy-mm-dd"）を、保存値（数字のみ "yyyyMMdd"）に変換する。
+ * 未入力の場合は空文字を返す。
+ */
+export function fromDateInputValue(value) {
+  if (!value) return "";
+  return String(value).replace(/\D/g, "");
+}
+
 export function formatAuditDateTime(value, pattern) {
   if (!value) return "";
   const m = String(value).match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);

@@ -96,6 +96,7 @@ export default function ItemSettingTable({ itemSettings, codeMasters, title = "�
                     <option value="NUMERIC">数値型</option>
                     <option value="MEMO">メモ型</option>
                     <option value="CHECKBOX">チェックボックス</option>
+                    <option value="DATE">日付型</option>
                   </select>
                 </td>
                 <td>

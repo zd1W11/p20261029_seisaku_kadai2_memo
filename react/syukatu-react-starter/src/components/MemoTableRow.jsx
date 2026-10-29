@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router";
 import { keyOf, codeLabel, truncateByWidth, formatNumeric } from "../utils/memoCalc";
-import { formatAuditDateTime } from "../utils/dateFormat";
+import { formatAuditDateTime, formatDateValue } from "../utils/dateFormat";
 import useDeleteMemo from "../hooks/useDeleteMemo";
 
 /**
@@ -11,6 +11,7 @@ import useDeleteMemo from "../hooks/useDeleteMemo";
  * セルの文字は上寄せで表示する。各項目の値は表示桁数のバイト数（UTF-8）までを表示し、
  * 超える部分は表示しない（文字の泣き別れが起きないよう、文字を分割せずに切り取る）。
  * 数値型の項目は、カンマ区切りで表示する。
+ * 日付型の項目は、保存値（数字のみ "yyyyMMdd"）を "yyyy/mm/dd" で表示する。
  * チェックボックス項目は disabled のチェックボックス（値 "1" でチェック）で表示する。
  *
  * プロップス:
@@ -69,6 +70,8 @@ export default function MemoTableRow({ memo, rowNo, visibleSettings, codeMasters
               truncateByWidth(codeLabel(codeMasters, s.codeId, v), s.displayWidth)
             ) : s.dataType === "NUMERIC" ? (
               truncateByWidth(formatNumeric(v), s.displayWidth)
+            ) : s.dataType === "DATE" ? (
+              truncateByWidth(formatDateValue(v), s.displayWidth)
             ) : (
               truncateByWidth(v, s.displayWidth)
             )}

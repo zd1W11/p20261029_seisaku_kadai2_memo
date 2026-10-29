@@ -25,7 +25,7 @@ public class ItemSetting {
 	/** 必須項目かどうか（必須の場合は編集画面で項目名に赤い「*」を表示し、未入力は保存不可） */
 	private Boolean isRequired;
 
-	@Pattern(regexp = "STRING|MEMO|NUMERIC|CHECKBOX")
+	@Pattern(regexp = "STRING|MEMO|NUMERIC|CHECKBOX|DATE")
 	private String dataType;
 
 	@Min(1)
